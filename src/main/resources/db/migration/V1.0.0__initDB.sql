@@ -8,7 +8,7 @@ CREATE TABLE notes(
     uuid VARCHAR(36) PRIMARY key,
     name VARCHAR(100) NOT NULL,
     body VARCHAR(10000),
-    access VARCHAR(6) NOT NULL
+    access VARCHAR(10) NOT NULL
 );
 
 CREATE TABLE users_notes(
