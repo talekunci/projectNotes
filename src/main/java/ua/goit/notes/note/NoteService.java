@@ -13,19 +13,15 @@ public class NoteService {
     private NoteRepository repository;
 
     public List<Note> getAll(){
-        return (List<Note>) repository.findAll();
+        return repository.findAll();
     }
 
     public void save(Note note){
         repository.save(note);
     }
 
-    public Note get (String uuid) throws Exception {
-        Optional<Note> optionalNote = repository.findById(uuid);
-        if(optionalNote.isPresent()){
-            return optionalNote.get();
-        }
-        throw new Exception("Note not found!");
+    public Note get (String uuid){
+        return repository.findById(uuid).orElseThrow();
     }
 
     public void delete (String id){
