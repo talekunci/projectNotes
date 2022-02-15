@@ -13,8 +13,8 @@ CREATE TABLE notes(
 
 CREATE TABLE users_notes(
     user_id INTEGER NOT NULL,
-    note_id INTEGER NOT NULL,
+    note_uuid VARCHAR(36) NOT NULL,
 
-    CONSTRAINT user_id_fk FOREIGN key user_id REFERENCES users(id),
-    CONSTRAINT note_id_fk FOREIGN key note_id REFERENCES notes(id)
+    CONSTRAINT user_id_fk FOREIGN key (user_id) REFERENCES users(id),
+    CONSTRAINT note_uuid_fk FOREIGN key (note_uuid) REFERENCES notes(uuid)
 );
