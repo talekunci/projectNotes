@@ -11,7 +11,6 @@
 
     <form th:action="@{/notes/save}" method="post" th:object="${note}"
           style="max-width: 500px; margin: 0 auto">
-        <input type="hidden" th:field="*{uuid}">
         <div class="border border-secondary rounded p-3">
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Note ID</label>
