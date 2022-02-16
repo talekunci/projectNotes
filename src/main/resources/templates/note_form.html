@@ -9,7 +9,7 @@
 <div class="container-fluid">
     <div class="text-center"><h2>Add New Note</h2></div>
 
-    <form th:action="@{/notes/save}" method="post" th:object="${note}"
+    <form th:action="@{/notes/create}" method="post" th:object="${note}"
           style="max-width: 500px; margin: 0 auto">
         <div class="border border-secondary rounded p-3">
             <div class="form-group row">

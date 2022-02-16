@@ -30,9 +30,9 @@ public class NoteController {
         return "note_form";
     }
 
-    @PostMapping("/save")
-    public String saveNote (Note note){
-        service.save(note);
+    @PostMapping("/create")
+    public String createNote (Note note){
+        service.create(note);
         return "redirect:/notes";
     }
 
