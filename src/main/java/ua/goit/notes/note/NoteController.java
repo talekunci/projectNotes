@@ -6,35 +6,37 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/notes")
 public class NoteController {
 
     @Autowired
     private NoteService service;
 
-    @GetMapping("/notes")
+    @GetMapping
     public String showNotes(Model model){
         List<Note> noteList = service.getAll();
         model.addAttribute("noteList", noteList);
         return "notes";
     }
 
-    @GetMapping("/notes/new")
+    @GetMapping("/new")
     public String getCreateForm(Model model){
         model.addAttribute("note", new Note());
         return "note_form";
     }
 
-    @PostMapping("/notes/save")
+    @PostMapping("/save")
     public String saveNote (Note note){
         service.save(note);
         return "redirect:/notes";
     }
 
-    @GetMapping("/notes/edit/{uuid}")
+    @GetMapping("/edit/{uuid}")
     public String showEditForm(@PathVariable("uuid") String uuid, Model model){
         try {
             Note note = service.get(uuid);
@@ -46,7 +48,7 @@ public class NoteController {
         }
     }
 
-    @GetMapping("/notes/delete/{uuid}")
+    @GetMapping("/delete/{uuid}")
     public String deleteNote(@PathVariable("uuid") String uuid){
         service.delete(uuid);
         return "redirect:/notes";
