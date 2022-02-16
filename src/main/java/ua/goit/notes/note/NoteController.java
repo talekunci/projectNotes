@@ -34,8 +34,8 @@ public class NoteController {
         return "redirect:/notes";
     }
 
-    @GetMapping("/notes/edit/{id}")
-    public String showEditForm(@PathVariable("id") String uuid, Model model){
+    @GetMapping("/notes/edit/{uuid}")
+    public String showEditForm(@PathVariable("uuid") String uuid, Model model){
         try {
             Note note = service.get(uuid);
             model.addAttribute("note", note);
@@ -47,8 +47,8 @@ public class NoteController {
     }
 
     @GetMapping("/notes/delete/{uuid}")
-    public String deleteNote(@PathVariable("uuid") String id){
-        service.delete(id);
+    public String deleteNote(@PathVariable("uuid") String uuid){
+        service.delete(uuid);
         return "redirect:/notes";
     }
 
