@@ -10,13 +10,13 @@ import java.util.HashSet;
 @Table(name = "notes")
 public class Note {
     @Id
-    @Column(name = "uuid", nullable = false)
+    @Column(name = "uuid", nullable = false, length = 36)
     private String uuid;
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
-    @Column(name = "body", nullable = false)
+    @Column(name = "body", nullable = false, length = 10000)
     private String body;
-    @Column(name = "access", nullable = false)
+    @Column(name = "access", nullable = false, length = 10)
     private String access;
 //    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinTable(name = "users_notes", joinColumns = @JoinColumn(name = "user_id"),
