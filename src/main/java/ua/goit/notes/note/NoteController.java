@@ -43,4 +43,16 @@ public class NoteController {
         service.delete(uuid);
     }
 
+    @GetMapping("/share/{uuid}")
+    public String shareNote (@PathVariable("uuid") String uuid, Model model){
+        Note note = service.get(uuid);
+        if (note!=null && note.getAccess().equals(AccessTypes.PUBLIC)){
+            model.addAttribute("note", note);
+        }
+        if (note!=null && note.getAccess().equals(AccessTypes.PUBLIC)){
+            return "redirect:/error";
+        }
+        return "shared_note";
+    }
+
 }
