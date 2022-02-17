@@ -1,6 +1,7 @@
-package ua.goit.notes.registration;
+package ua.goit.notes.users;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,8 +11,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import ua.goit.notes.users.User;
-import ua.goit.notes.users.UserService;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -24,8 +23,10 @@ import java.util.stream.Collectors;
 @Controller
 public class RegistrationController {
 
-    private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserRepository repository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/register")
     public String registration(Model model){
@@ -34,12 +35,12 @@ public class RegistrationController {
 
     @PostMapping("/register")
     public String addUser(@Valid User user, BindingResult bindingResult, Model model){
-        if (userService.findByName(user.getName())!=null){
+        if (repository.findByName(user.getName())!=null){
             model.addAttribute("message", Collections.singletonList("User exists!"));
             return "register";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.save(user);
+        repository.save(user);
         return "redirect:/login";
     }
 

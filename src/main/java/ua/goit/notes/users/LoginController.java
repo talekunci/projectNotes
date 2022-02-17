@@ -1,4 +1,4 @@
-package ua.goit.notes.login;
+package ua.goit.notes.users;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;

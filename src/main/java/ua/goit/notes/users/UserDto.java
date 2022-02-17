@@ -28,5 +28,4 @@ public class UserDto {
             message = "The username must be between {min} and {max} characters long and contains only numbers and english letters")
     private String name;
 
-    private Set<Note> notes;
 }
