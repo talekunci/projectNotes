@@ -1,8 +1,7 @@
-CREATE TABLE users (
-    id uuid not null,
-    active boolean not null,
-    password varchar(255),
-    username varchar(255), primary key (id)
+CREATE TABLE users(
+    id serial PRIMARY key,
+    name VARCHAR(50) NOT NULL,
+    password VARCHAR(72) NOT NULL
 );
 
 CREATE TABLE notes(
