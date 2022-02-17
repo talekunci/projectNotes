@@ -21,6 +21,6 @@ public class Note {
     private AccessTypes access;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "users_notes", joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "note_id"))
+            inverseJoinColumns = @JoinColumn(name = "note_uuid"))
     private Set<User> users = new HashSet<>();
 }
