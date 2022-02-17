@@ -17,9 +17,10 @@ public class Note {
     @Column(name = "body", nullable = false, length = 10000)
     private String body;
     @Column(name = "access", nullable = false, length = 10)
-    private String access;
-//    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable(name = "users_notes", joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "note_id"))
-//    private Set<User> users = new HashSet<>();
+    @Enumerated(EnumType.STRING)
+    private AccessTypes access;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_notes", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "note_id"))
+    private Set<User> users = new HashSet<>();
 }

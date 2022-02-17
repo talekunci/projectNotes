@@ -2,6 +2,7 @@ package ua.goit.notes.note;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -27,4 +28,21 @@ public class NoteService {
         repository.deleteById(uuid);
     }
 
+    public void update(String uuid, NoteDto dto) {
+        repository.findById(uuid)
+                .map(note -> {
+                    if (StringUtils.hasText(dto.getName())){
+                        note.setName(dto.getName());
+                    }
+                    if (StringUtils.hasText(dto.getBody())){
+                        note.setBody(dto.getBody());
+                    }
+                    if (StringUtils.hasText(String.valueOf(dto.getAccess()))){
+                        note.setAccess(dto.getAccess());
+                    }
+                    return note;
+                }).ifPresent(note -> {
+                    repository.save(note);
+                });
+    }
 }

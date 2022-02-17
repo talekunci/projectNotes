@@ -3,10 +3,7 @@ package ua.goit.notes.note;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,22 +33,14 @@ public class NoteController {
         return "redirect:/notes";
     }
 
-    @GetMapping("/edit/{uuid}")
-    public String showEditForm(@PathVariable("uuid") String uuid, Model model){
-        try {
-            Note note = service.get(uuid);
-            model.addAttribute("note", note);
-            return "note_form";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/notes";
-        }
+    @PutMapping("/{uuid}")
+    public void updateNote(@PathVariable("uuid") String uuid, @RequestBody NoteDto dto){
+        service.update(uuid, dto);
     }
 
-    @GetMapping("/delete/{uuid}")
-    public String deleteNote(@PathVariable("uuid") String uuid){
+    @DeleteMapping("/{uuid}")
+    public void deleteNote(@PathVariable String uuid){
         service.delete(uuid);
-        return "redirect:/notes";
     }
 
 }
