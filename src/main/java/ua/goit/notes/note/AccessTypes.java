@@ -22,7 +22,7 @@ public enum AccessTypes {
 
     public Optional<AccessTypes> getAccessType(String accessType) {
         return Arrays.stream(AccessTypes.values())
-                .filter(enumValue -> enumValue.getAccessType().equals(accessType))
+                .filter(enumValue -> enumValue.getAccessType().equalsIgnoreCase(accessType))
                 .findAny();
     }
 }

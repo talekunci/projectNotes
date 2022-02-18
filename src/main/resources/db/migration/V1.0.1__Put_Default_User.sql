@@ -1,7 +1,1 @@
-INSERT INTO
-   users(name, password)
-VALUES
-   (
-      'admin', 'super_secret_password'
-   )
-;
+INSERT INTO users(name, password) VALUES ('admin', 'super_secret_password');

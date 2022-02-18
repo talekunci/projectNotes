@@ -14,12 +14,15 @@ public class NoteDto {
     @Size(max = 36)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String uuid;
+
     @NotBlank
-    @Size(max = 100)
+    @Size(min = 5, max = 100)
     private String name;
+
     @NotBlank
-    @Size(max = 10000)
+    @Size(min = 5, max = 10000)
     private String body;
+
     @NotEmpty
     @Size(max = 10)
     private AccessTypes access;
