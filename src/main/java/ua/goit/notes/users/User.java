@@ -1,6 +1,8 @@
 package ua.goit.notes.users;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import ua.goit.notes.note.Note;
 
 import javax.persistence.*;
@@ -21,16 +23,12 @@ public class User {
     private String password;
     private String name;
 
-//    @ToString.Exclude
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinTable(name = "users_notes",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "note_uuid")
-//    )
-//    private Set<Note> notes;
-
     @ToString.Exclude
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @OneToMany(
+            mappedBy = "owner",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
     private Set<Note> notes;
 
     public User() {

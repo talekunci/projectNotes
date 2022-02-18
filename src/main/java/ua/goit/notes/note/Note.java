@@ -25,14 +25,6 @@ public class Note {
     @Enumerated(EnumType.STRING)
     private AccessTypes access;
 
-//    @ToString.Exclude
-//    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable(name = "users_notes",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "note_uuid")
-//    )
-//    private User owner;
-
     @ToString.Exclude
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
