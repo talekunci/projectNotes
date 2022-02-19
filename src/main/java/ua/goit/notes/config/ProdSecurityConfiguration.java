@@ -26,16 +26,19 @@ public class ProdSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/register", "/note/share/*").permitAll()
+                .antMatchers("/", "/register", "/notes/share/*").permitAll()
+                .antMatchers("/swagger-ui/*").denyAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
+                .formLogin().permitAll()
                 .loginPage("/login")
                 .failureUrl("/login-error")
-                .defaultSuccessUrl("/note/list")
-                .permitAll()
+                .defaultSuccessUrl("/notes")
                 .and()
-                .logout()
-                .permitAll();
+                .httpBasic()
+                .and()
+                .cors()
+                .and()
+                .csrf().disable();
     }
 }
