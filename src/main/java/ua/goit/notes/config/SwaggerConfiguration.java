@@ -28,10 +28,8 @@ public class SwaggerConfiguration {
     private ApiInfo getApiInfo() {
         return new ApiInfoBuilder()
                 .title("Notes")
-                .description("Custom description")
                 .version("1.0.0")
-                .license("Apache 2.0")
-                .license("https://www.apache.org/licences/LICENSE-2.0")
                 .build();
     }
+
 }
