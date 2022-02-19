@@ -19,6 +19,11 @@ public class NoteController {
         return service.getAll();
     }
 
+    @GetMapping("/{uuid}")
+    public NoteDto getNote(@PathVariable String uuid) {
+        return service.get(uuid);
+    }
+
     @PostMapping
     public void createNote(@Valid @RequestBody NoteDto note) {
         service.create(note);
