@@ -26,22 +26,15 @@ public class RegistrationController {
     @Autowired
     private UserService service;
 
-    @GetMapping("/register")
-    public String registration(Model model) {
-        return "register";
-    }
-
     @PostMapping("/register")
-    public String addUser(@Valid @RequestBody UserDto user, BindingResult bindingResult,
+    public void addUser(@Valid @RequestBody UserDto user, BindingResult bindingResult,
                           Model model) {
 
         if (service.getByName(user.getName()) != null) {
             model.addAttribute("message", Collections.singletonList("User exists!"));
-            return "register";
+        } else if (!bindingResult.hasErrors()) {
+            service.create(user);
         }
-
-        service.create(user);
-        return "redirect:/login";
     }
 
     @ExceptionHandler(ConstraintViolationException.class)

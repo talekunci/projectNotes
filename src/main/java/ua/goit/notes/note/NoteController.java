@@ -2,7 +2,6 @@ package ua.goit.notes.note;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,22 +15,13 @@ public class NoteController {
     private NoteService service;
 
     @GetMapping
-    public String showNotes(Model model) {
-        List<Note> noteList = service.getAll();
-        model.addAttribute("noteList", noteList);
-        return "notes";
+    public List<NoteDto> showNotes() {
+        return service.getAll();
     }
 
-    @GetMapping("/new")
-    public String getCreateForm(Model model) {
-        model.addAttribute("note", new Note());
-        return "note_form";
-    }
-
-    @PostMapping("/create")
-    public String createNote(@Valid @RequestBody NoteDto note) {
+    @PostMapping
+    public void createNote(@Valid @RequestBody NoteDto note) {
         service.create(note);
-        return "redirect:/notes";
     }
 
     @PutMapping("/{uuid}")
@@ -46,15 +36,14 @@ public class NoteController {
     }
 
     @GetMapping("/share/{uuid}")
-    public String shareNote(@PathVariable("uuid") String uuid, Model model) {
+    public NoteDto shareNote(@PathVariable("uuid") String uuid) {
         NoteDto note = service.get(uuid);
-        if (note != null && note.getAccess().equals(AccessTypes.PUBLIC)) {
-            model.addAttribute("note", note);
+
+        if (note.getAccess().equals(AccessTypes.PRIVATE)) {
+            note = null;
         }
-        if (note != null && note.getAccess().equals(AccessTypes.PUBLIC)) {
-            return "redirect:/error";
-        }
-        return "shared_note";
+
+        return note;
     }
 
 }

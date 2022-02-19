@@ -7,6 +7,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class NoteService {
@@ -16,8 +17,11 @@ public class NoteService {
     @Autowired
     private ModelMapper mapper;
 
-    public List<Note> getAll() {
-        return repository.findAll();
+    public List<NoteDto> getAll() {
+        return repository.findAll()
+                .stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
     }
 
     public NoteDto get(String uuid) {
