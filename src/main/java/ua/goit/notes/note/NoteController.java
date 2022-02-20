@@ -1,18 +1,21 @@
 package ua.goit.notes.note;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/notes")
+@RequestMapping("/note")
 public class NoteController {
 
+    private NoteServiceImpl service;
+
     @Autowired
-    private NoteService service;
+    public void setService(NoteServiceImpl service) {
+        this.service = service;
+    }
 
     @GetMapping
     public List<NoteDto> showNotes() {

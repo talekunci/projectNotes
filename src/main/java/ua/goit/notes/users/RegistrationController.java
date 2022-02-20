@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class RegistrationController {
 
     @Autowired
-    private UserService service;
+    private UserServiceImpl service;
 
     @PostMapping("/register")
     public void register(@Valid @RequestBody UserDto user, BindingResult bindingResult,

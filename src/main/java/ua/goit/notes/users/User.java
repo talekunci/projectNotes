@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
+@NoArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -21,20 +22,9 @@ public class User {
     private String password;
     private String name;
 
-//    @ToString.Exclude
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinTable(name = "users_notes",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "note_uuid")
-//    )
-//    private Set<Note> notes;
-
     @ToString.Exclude
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private Set<Note> notes;
-
-    public User() {
-    }
 
     public User(Long id, String password, String name) {
         this.id = id;
