@@ -1,15 +1,18 @@
 package ua.goit.notes.note;
 
-import ua.goit.notes.users.UserDto;
-
 import java.util.List;
+import java.util.UUID;
 
 public interface NoteService {
 
     List<NoteDto> getAll();
-    NoteDto get(String uuid);
+
+    NoteDto get(UUID uuid);
+
     void create(NoteDto dto);
-    void update(String uuid, NoteDto dto);
-    void delete(String uuid);
+
+    void update(UUID uuid, NoteDto dto);
+
+    void delete(UUID uuid);
 
 }

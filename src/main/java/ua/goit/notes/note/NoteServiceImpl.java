@@ -34,7 +34,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public NoteDto get(String uuid) {
+    public NoteDto get(UUID uuid) {
         return repository.findById(uuid)
                 .map(this::mapToDto)
                 .orElseThrow();
@@ -42,18 +42,16 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public void create(NoteDto dto) {
-        dto.setUuid(UUID.randomUUID().toString());
-
         repository.save(mapToNote(dto));
     }
 
     @Override
-    public void delete(String uuid) {
+    public void delete(UUID uuid) {
         repository.deleteById(uuid);
     }
 
     @Override
-    public void update(String uuid, NoteDto dto) {
+    public void update(UUID uuid, NoteDto dto) {
         repository.findById(uuid)
                 .map(note -> {
                     if (StringUtils.hasText(dto.getName())) {

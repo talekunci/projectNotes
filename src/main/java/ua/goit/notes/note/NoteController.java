@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/note")
@@ -23,7 +24,7 @@ public class NoteController {
     }
 
     @GetMapping("/{uuid}")
-    public NoteDto getNote(@PathVariable String uuid) {
+    public NoteDto getNote(@PathVariable UUID uuid) {
         return service.get(uuid);
     }
 
@@ -33,18 +34,18 @@ public class NoteController {
     }
 
     @PutMapping("/{uuid}")
-    public void updateNote(@PathVariable("uuid") String uuid,
+    public void updateNote(@PathVariable("uuid") UUID uuid,
                            @RequestBody NoteDto dto) {
         service.update(uuid, dto);
     }
 
     @DeleteMapping("/{uuid}")
-    public void deleteNote(@PathVariable String uuid) {
+    public void deleteNote(@PathVariable UUID uuid) {
         service.delete(uuid);
     }
 
     @GetMapping("/share/{uuid}")
-    public NoteDto shareNote(@PathVariable("uuid") String uuid) {
+    public NoteDto shareNote(@PathVariable("uuid") UUID uuid) {
         NoteDto note = service.get(uuid);
 
         if (note.getAccess().equals(AccessTypes.PRIVATE)) {

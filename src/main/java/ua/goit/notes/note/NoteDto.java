@@ -6,14 +6,14 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.UUID;
 
 @Data
 public class NoteDto {
 
     @NotBlank
-    @Size(max = 36)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private String uuid;
+    private UUID uuid;
 
     @NotBlank
     @Size(min = 5, max = 100)

@@ -1,0 +1,1 @@
+INSERT INTO users VALUES (1, 'admin', '{bcrypt}$2a$10$pm5j7apdDgTTpQDuQ0xsm.snOYE1YVrGo5.YKb1.uEI/gq2cmOg8O');

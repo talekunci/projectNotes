@@ -5,7 +5,7 @@ CREATE TABLE users(
 );
 
 CREATE TABLE notes(
-    uuid VARCHAR(36) PRIMARY key,
+    uuid UUID PRIMARY key,
     name VARCHAR(100) NOT NULL,
     body VARCHAR(10000),
     access VARCHAR(10) NOT NULL,
@@ -13,3 +13,8 @@ CREATE TABLE notes(
 
     CONSTRAINT user_id_fk FOREIGN key (user_id) REFERENCES users(id)
 );
+
+CREATE EXTENSION "uuid-ossp";
+
+alter table notes
+    alter column uuid set default uuid_generate_v4();

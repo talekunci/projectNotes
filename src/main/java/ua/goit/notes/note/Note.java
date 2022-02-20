@@ -1,13 +1,11 @@
 package ua.goit.notes.note;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import ua.goit.notes.users.User;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.UUID;
 
 @NoArgsConstructor
 @Entity
@@ -18,8 +16,9 @@ import java.util.Objects;
 public class Note {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "uuid", updatable = false)
-    private String uuid;
+    private UUID uuid;
 
     private String name;
     private String body;
@@ -32,7 +31,7 @@ public class Note {
     @JoinColumn(name = "user_id", nullable = false)
     private User owner;
 
-    public Note(String uuid, String name, String body, AccessTypes access) {
+    public Note(UUID uuid, String name, String body, AccessTypes access) {
         this.uuid = uuid;
         this.name = name;
         this.body = body;
