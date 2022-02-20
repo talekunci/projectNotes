@@ -3,6 +3,8 @@ package ua.goit.notes.users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -39,7 +41,9 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id, HttpServletResponse response) throws IOException {
+        response.sendRedirect("/logout");
+
         service.delete(id);
     }
 }
