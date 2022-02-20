@@ -3,10 +3,7 @@ package ua.goit.notes.users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.ConstraintViolation;
@@ -18,8 +15,12 @@ import java.util.stream.Collectors;
 @RestController
 public class RegistrationController {
 
-    @Autowired
     private UserServiceImpl service;
+
+    @Autowired
+    public void setService(UserServiceImpl service) {
+        this.service = service;
+    }
 
     @PostMapping("/register")
     public void register(@Valid @RequestBody UserDto user, BindingResult bindingResult,
@@ -34,6 +35,7 @@ public class RegistrationController {
 
     @ExceptionHandler(ConstraintViolationException.class)
     ModelAndView onConstraintValidationException(ConstraintViolationException e, Model model) {
+        System.out.println("exception");
         model.addAttribute("message", e.getConstraintViolations().stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.toList()));

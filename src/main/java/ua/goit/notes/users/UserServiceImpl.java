@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     public UserDto getByName(String name) {
         User byName = repository.findByName(name);
 
-        return byName == null ? mapToDto(byName) : null;
+        return byName != null ? mapToDto(byName) : null;
     }
 
     @Transactional
