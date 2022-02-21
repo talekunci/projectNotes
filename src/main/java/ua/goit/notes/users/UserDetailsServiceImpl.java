@@ -1,5 +1,6 @@
 package ua.goit.notes.users;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class UserDetailService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -30,18 +31,14 @@ public class UserDetailService implements UserDetailsService {
             throw new UsernameNotFoundException("User by this login not found.");
         }
 
-        return new MyUserDetails(user, encoder);
+        return new CustomUserDetails(user, encoder);
     }
 
-    public static class MyUserDetails implements UserDetails {
+    @AllArgsConstructor
+    public static class CustomUserDetails implements UserDetails {
 
         private final User user;
         private PasswordEncoder encoder;
-
-        public MyUserDetails(User user, PasswordEncoder encoder) {
-            this.user = user;
-            this.encoder = encoder;
-        }
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
