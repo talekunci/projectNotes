@@ -10,6 +10,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.List;
 
 @Profile("prod")
 @Configuration
@@ -25,20 +28,28 @@ public class ProdSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200/"));
+        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE"));
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setExposedHeaders(List.of("Authorization"));
+
         http.authorizeRequests()
-                .antMatchers("/", "/register", "/note/share/*").permitAll()
-                .antMatchers("/swagger-ui/*", "/user", "/user/*").denyAll()
-                .anyRequest().authenticated()
+                    .antMatchers("/", "/register", "/note/share/*").permitAll()
+                    .antMatchers("/swagger-ui/*", "/user", "/user/*").denyAll()
+                    .anyRequest().authenticated()
                 .and()
-                .formLogin().permitAll()
-                .loginPage("/login")
-                .failureUrl("/login-error")
-                .defaultSuccessUrl("/note")
+                    .formLogin().permitAll()
+                    .loginPage("/login")
+                    .failureUrl("/login-error")
+                    .defaultSuccessUrl("/note")
                 .and()
-                .httpBasic()
+                    .httpBasic()
                 .and()
-                .cors()
+                    .cors()
                 .and()
-                .csrf().disable();
+                    .csrf().disable()
+                    .cors().configurationSource(request -> corsConfiguration);
     }
 }
