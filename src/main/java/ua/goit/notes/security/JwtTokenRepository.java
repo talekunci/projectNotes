@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.DefaultCsrfToken;
@@ -37,7 +38,9 @@ public class JwtTokenRepository implements CsrfTokenRepository {
 
     @Override
     public CsrfToken generateToken(HttpServletRequest request) {
-        Principal userPrincipal = request.getUserPrincipal();
+        System.out.println(request.getUserPrincipal());
+        return new DefaultCsrfToken("x-csrf-token", "_csrf", "token");
+        /*Principal userPrincipal = request.getUserPrincipal();
         UserDto user = service.getByName(userPrincipal.getName());
 
         String id = user.getId().toString();
@@ -59,7 +62,7 @@ public class JwtTokenRepository implements CsrfTokenRepository {
             //ignore
         }
 
-        return new DefaultCsrfToken("x-csrf-token", "_csrf", token);
+        return new DefaultCsrfToken("x-csrf-token", "_csrf", token);*/
     }
 
     @Override
