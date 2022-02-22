@@ -38,9 +38,9 @@ public class JwtTokenRepository implements CsrfTokenRepository {
 
     @Override
     public CsrfToken generateToken(HttpServletRequest request) {
-        System.out.println(request.getUserPrincipal());
-        return new DefaultCsrfToken("x-csrf-token", "_csrf", "token");
-        /*Principal userPrincipal = request.getUserPrincipal();
+//        System.out.println(request.getUserPrincipal());
+//        return new DefaultCsrfToken("x-csrf-token", "_csrf", "token");
+        Principal userPrincipal = request.getUserPrincipal();
         UserDto user = service.getByName(userPrincipal.getName());
 
         String id = user.getId().toString();
@@ -62,7 +62,7 @@ public class JwtTokenRepository implements CsrfTokenRepository {
             //ignore
         }
 
-        return new DefaultCsrfToken("x-csrf-token", "_csrf", token);*/
+        return new DefaultCsrfToken("x-csrf-token", "_csrf", token);
     }
 
     @Override
