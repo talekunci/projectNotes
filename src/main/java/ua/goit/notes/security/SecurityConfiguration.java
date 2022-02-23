@@ -66,23 +66,49 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .authenticationEntryPoint(((request, response, e) -> resolver.resolveException(request, response, null, e)));
 
 
+//        http
+//            .authorizeRequests()
+//                .antMatchers("/note/share/**", "/swagger-ui/**", "/register").permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//            .formLogin()
+//                .loginPage("/login")
+//                .permitAll()
+//                .and()
+//            .addFilterAt(new JwtCsrfFilter(jwtTokenRepository, resolver), CsrfFilter.class)
+//                .csrf()
+//                .ignoringAntMatchers("/**")
+//                .and()
+//            .logout()
+//                .permitAll()
+//                .and()
+//            .cors().configurationSource(request -> corsConfiguration);
+
+
         http
-            .authorizeRequests()
-                .antMatchers("/note/share/**", "/swagger-ui/**", "/register").permitAll()
-                .anyRequest().authenticated()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.NEVER)
+//            .and()
+                .addFilterAt(new JwtCsrfFilter(jwtTokenRepository, resolver), CsrfFilter.class)
+                .csrf().ignoringAntMatchers("/**")
                 .and()
-            .formLogin()
+                .authorizeRequests()
+                .antMatchers("/login")
+                .authenticated()
+                .antMatchers("/", "/register", "/note/share/*").permitAll()
+                .antMatchers("/swagger-ui/**", "/user", "/user/*").denyAll()
+                .and()
+                .formLogin().permitAll()
                 .loginPage("/login")
-                .permitAll()
+                .failureUrl("/login-error")
+                .defaultSuccessUrl("/note")
                 .and()
-            .addFilterAt(new JwtCsrfFilter(jwtTokenRepository, resolver), CsrfFilter.class)
-                .csrf()
-                .ignoringAntMatchers("/**")
+                .httpBasic()
+                .authenticationEntryPoint(((request, response, e) -> resolver.resolveException(request, response, null, e)))
                 .and()
-            .logout()
-                .permitAll()
+                .cors()
                 .and()
-            .cors().configurationSource(request -> corsConfiguration);
+                .cors().configurationSource(request -> corsConfiguration);
     }
 
     @Override

@@ -48,9 +48,9 @@ public class ProdSecurityConfiguration extends WebSecurityConfigurerAdapter {
         corsConfiguration.setExposedHeaders(List.of("Authorization"));
 
         http
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.NEVER)
-            .and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.NEVER)
+//            .and()
                 .addFilterAt(new JwtCsrfFilter(jwtTokenRepository, resolver), CsrfFilter.class)
                 .csrf().ignoringAntMatchers("/**")
             .and()
@@ -58,7 +58,7 @@ public class ProdSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login")
                 .authenticated()
                 .antMatchers("/", "/register", "/note/share/*").permitAll()
-                .antMatchers("/swagger-ui/*", "/user", "/user/*").denyAll()
+                .antMatchers("/swagger-ui/**", "/user", "/user/*").denyAll()
             .and()
                 .formLogin().permitAll()
                 .loginPage("/login")
