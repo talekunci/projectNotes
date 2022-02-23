@@ -32,7 +32,7 @@ public class JwtTokenRepository implements CsrfTokenRepository {
 
     @Autowired
     public JwtTokenRepository(UserServiceImpl service) {
-        this.secret = "secret";
+        this.secret = "superSecretKey";
         this.service = service;
     }
 

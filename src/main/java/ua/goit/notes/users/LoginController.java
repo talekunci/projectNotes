@@ -28,16 +28,16 @@ public class LoginController {
     private UserServiceImpl service;
 
     @GetMapping("/login")
-    public CsrfToken login(@Valid @RequestBody UserDto dto, BindingResult result,
+    public CsrfToken login(@Valid @RequestBody UserDto dto, BindingResult bindingResult,
                            HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        if (result.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             response.sendRedirect("/login-error");
             return null;
         } else {
             UserDto user = service.getByName(dto.getName());
 
-            if (user == null || !user.getPassword().equals(dto.getPassword())) {
+            if (user == null) {
                 response.sendRedirect("/login-error");
                 return null;
             }
