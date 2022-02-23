@@ -30,6 +30,8 @@ public class JwtTokenRepository implements CsrfTokenRepository {
     private final String secret;
     private final UserServiceImpl service;
 
+    private UserDto user;
+
     @Autowired
     public JwtTokenRepository(UserServiceImpl service) {
         this.secret = "superSecretKey";
@@ -40,8 +42,8 @@ public class JwtTokenRepository implements CsrfTokenRepository {
     public CsrfToken generateToken(HttpServletRequest request) {
 //        System.out.println(request.getUserPrincipal());
 //        return new DefaultCsrfToken("x-csrf-token", "_csrf", "token");
-        Principal userPrincipal = request.getUserPrincipal();
-        UserDto user = service.getByName(userPrincipal.getName());
+//        Principal userPrincipal = request.getUserPrincipal();
+//        UserDto user = service.getByName(userPrincipal.getName());
 
         String id = user.getId().toString();
         Date now = new Date();
@@ -87,5 +89,10 @@ public class JwtTokenRepository implements CsrfTokenRepository {
     public void clearToken(HttpServletResponse response) {
         if (response.getHeaderNames().contains("x-csrf-token"))
             response.setHeader("x-csrf-token", "");
+    }
+
+    public CsrfToken generateToken(HttpServletRequest request, UserDto dto) {
+        this.user = dto;
+        return generateToken(request);
     }
 }

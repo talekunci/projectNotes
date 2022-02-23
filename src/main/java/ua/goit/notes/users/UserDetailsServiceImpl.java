@@ -3,7 +3,6 @@ package ua.goit.notes.users;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -24,11 +22,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private PasswordEncoder encoder;
 
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user = userRepository.findByName(login);
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        User user = userRepository.findByName(userName);
 
         if (user == null) {
-            throw new UsernameNotFoundException("User by this login not found.");
+            throw new UsernameNotFoundException("User by this userName not found.");
         }
 
         return new CustomUserDetails(user, encoder);
@@ -42,9 +40,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            return user.getNotes().stream()
-                    .map(note -> new SimpleGrantedAuthority(note.getName()))
-                    .collect(Collectors.toList());
+            return null;
         }
 
         @Override

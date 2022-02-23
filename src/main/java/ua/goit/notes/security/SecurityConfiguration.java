@@ -43,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
         corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200/"));
-        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT", "OPTIONS", "PATCH", "DELETE"));
+        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setExposedHeaders(List.of("Authorization"));
 
@@ -85,30 +85,45 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //            .cors().configurationSource(request -> corsConfiguration);
 
 
+//        http
+////                .sessionManagement()
+////                .sessionCreationPolicy(SessionCreationPolicy.NEVER)
+////            .and()
+////                    .addFilterAt(new JwtCsrfFilter(jwtTokenRepository, resolver), CsrfFilter.class)
+//                .csrf().disable()
+//                    .authorizeRequests()
+//                    .antMatchers("/note/*")
+//                    .authenticated()
+//                    .antMatchers("/", "/register", "/note/share/*").permitAll()
+//                    .antMatchers("/swagger-ui/**", "/user", "/user/*").denyAll()
+//                .and()
+//                    .formLogin()
+//                    .permitAll()
+//                    .loginPage("/login")
+//                    .failureUrl("/login-error")
+//                    .defaultSuccessUrl("/note")
+//                .and()
+//                    .httpBasic()
+//                    .authenticationEntryPoint(((request, response, e) -> resolver.resolveException(request, response, null, e)))
+//                .and()
+//                    .cors()
+//                .and()
+//                    .cors().configurationSource(request -> corsConfiguration);
+
+
         http
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.NEVER)
-//            .and()
-//                    .addFilterAt(new JwtCsrfFilter(jwtTokenRepository, resolver), CsrfFilter.class)
                 .csrf().disable()
                     .authorizeRequests()
-                    .antMatchers("/note/*")
-                    .authenticated()
-                    .antMatchers("/", "/register", "/note/share/*").permitAll()
-                    .antMatchers("/swagger-ui/**", "/user", "/user/*").denyAll()
+                    .antMatchers("/register").permitAll()
+                    .anyRequest().authenticated()
                 .and()
                     .formLogin()
-                    .permitAll()
                     .loginPage("/login")
-                    .failureUrl("/login-error")
-                    .defaultSuccessUrl("/note")
+                    .permitAll()
                 .and()
-                    .httpBasic()
-                    .authenticationEntryPoint(((request, response, e) -> resolver.resolveException(request, response, null, e)))
-                .and()
-                    .cors()
-                .and()
-                    .cors().configurationSource(request -> corsConfiguration);
+                .logout()
+                .permitAll()
+                .logoutSuccessUrl("/login?logout");
     }
 
     @Override
