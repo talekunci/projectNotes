@@ -25,10 +25,10 @@ public class JwtCsrfFilter extends OncePerRequestFilter {
     private final CsrfTokenRepository tokenRepository;
 
     private final HandlerExceptionResolver resolver;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+
         request.setAttribute(HttpServletResponse.class.getName(), response);
         CsrfToken csrfToken = this.tokenRepository.loadToken(request);
         boolean missingToken = csrfToken == null;

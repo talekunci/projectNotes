@@ -47,23 +47,42 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setExposedHeaders(List.of("Authorization"));
 
+//        http
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.NEVER)
+//            .and()
+//                .addFilterAt(new JwtCsrfFilter(jwtTokenRepository, resolver), CsrfFilter.class)
+//                .csrf().ignoringAntMatchers("/**")
+//            .and()
+//                .authorizeRequests()
+//                .anyRequest()
+//                .permitAll()
+//            .and()
+//                .cors()
+//            .and()
+//                .cors().configurationSource(request -> corsConfiguration)
+//            .and()
+//                .httpBasic()
+//                .authenticationEntryPoint(((request, response, e) -> resolver.resolveException(request, response, null, e)));
+
+
         http
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.NEVER)
-            .and()
-                .addFilterAt(new JwtCsrfFilter(jwtTokenRepository, resolver), CsrfFilter.class)
-                .csrf().ignoringAntMatchers("/**")
-            .and()
-                .authorizeRequests()
-                .anyRequest()
+            .authorizeRequests()
+                .antMatchers("/note/share/**", "/swagger-ui/**", "/register").permitAll()
+                .anyRequest().authenticated()
+                .and()
+            .formLogin()
+                .loginPage("/login")
                 .permitAll()
-            .and()
-                .cors()
-            .and()
-                .cors().configurationSource(request -> corsConfiguration)
-            .and()
-                .httpBasic()
-                .authenticationEntryPoint(((request, response, e) -> resolver.resolveException(request, response, null, e)));
+                .and()
+            .addFilterAt(new JwtCsrfFilter(jwtTokenRepository, resolver), CsrfFilter.class)
+                .csrf()
+                .ignoringAntMatchers("/**")
+                .and()
+            .logout()
+                .permitAll()
+                .and()
+            .cors().configurationSource(request -> corsConfiguration);
     }
 
     @Override
